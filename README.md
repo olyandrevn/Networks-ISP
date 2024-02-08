@@ -10,7 +10,7 @@
 - Users with ip subnet ```10.207.128.0/18```
 - Company with ip subnet ```10.207.192.0/18```
 2. “Users” segment  have NAT.
-3. ISP has 3 plans - with limited speed, with limited traffic,with unlimited speed and traffic
+3. ISP has 3 plans - with limited speed, with limited traffic, with unlimited speed and traffic
 
 
 The system will look like this:
@@ -20,7 +20,7 @@ The system will look like this:
 
 ![Screenshot from 2024-01-27 12-34-42](https://github.com/olyandrevn/Networks-ISP/assets/33371372/caeeb15e-b1a1-4216-afd6-b122582766e5)
 
-  
+
 ## Install
 
 ### 1. Install VirtualBox:
@@ -49,18 +49,17 @@ Each Adapter is the analogy of cable connection.
 
 ### 3. Setup Users subnet with NAT:
 #### 3.1. Setup Router#2 Users:
-To setup interfaces:
+1. To setup interfaces:
 ```
 sudo bash users/users_router/interfaces.sh
 ```
 After this virtual machine should be restarted.
 
-To setup ip_forward and NAT:
+2. To setup ip_forward and NAT:
 ```
 sudo bash users/users_router/iptables.sh none
 ```
-
-To setup DHCP:
+3. To setup DHCP:
 ```
 sudo bash users/users_router/dhcp.sh
 ```
@@ -74,13 +73,13 @@ After this virtual machine should be restarted.
 
 ### 4. Setup Company subnet:
 #### 4.1. Setup Router#3 Company:
-To setup interfaces:
+1. To setup interfaces:
 ```
 sudo bash company/company_router/interfaces.sh
 ```
 After this virtual machine should be restarted.
 
-To setup ip_forward:
+2. To setup ip_forward:
 ```
 sudo bash company/company_router/iptables.sh none
 ```
@@ -91,18 +90,30 @@ sudo bash company/company/interfaces.sh
 ```
 After this virtual machine should be restarted.
 
-### 4. Setup Router#3 Company:
-Install bird
+### 4. Setup Router#1 BGP:
+1. Install bird
 ```
 sudo apt install bird2
 ```
-Update ```bird.conf```:
+2. Update ```bird.conf```:
 ```
 sudo cp bgp/bird.conf /etc/bird/bird.conf
 ```
+3. Setup ip_forward:
+```
+sudo sysctl -w net.ipv4.ip_forward=1
+```
 
+### 5. Traffic and speed limits:
+To set up traffic or speed limit:
+```
+sudo bash company/company_router/iptables.sh [memory|speed] <limit_value> <ip_address>
+OR
+sudo bash users/users_router/iptables.sh [memory|speed] <limit_value> <ip_address>
+```
 ## Usage
-
-## Author
-
-👤 
+1. Install wireguard VPN
+2. Unpack the zip archive
+3. [Import](https://developerinsider.co/how-to-set-up-wireguard-client-on-ubuntu/) wireguard VPN configuration (named 207.conf)
+4. Run wireguard VPN.
+5. Run ```tester.py``` from Users/Company Client networks and see the output
