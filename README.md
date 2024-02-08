@@ -113,7 +113,6 @@ sudo bash users/users_router/iptables.sh [memory|speed] <limit_value> <ip_addres
 ```
 ## Usage
 1. Install wireguard VPN
-2. Unpack the zip archive
-3. [Import](https://developerinsider.co/how-to-set-up-wireguard-client-on-ubuntu/) wireguard VPN configuration (named 207.conf)
+2. [Import](https://developerinsider.co/how-to-set-up-wireguard-client-on-ubuntu/) wireguard VPN configuration (named ```wg_bgp_lab_test_group_207/207.conf```)
 4. Run wireguard VPN.
-5. Run ```tester.py``` from Users/Company Client networks and see the output
+5. Run ```wg_bgp_lab_test_group_207/tester.py``` from Users/Company Client networks and see the output
